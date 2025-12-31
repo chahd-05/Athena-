@@ -1,11 +1,11 @@
 <?php
-session_start();
-require_once __DIR__ . '/project.php';
 
-if(!isset($_SESSION['user_id'])){
+require_once __DIR__ . '/project.php';
+if(!isset($_SESSION['user'])){
     header('location: login.php');
     exit();
 }
+
 
 $message = '';
 
@@ -13,7 +13,7 @@ if($_SERVER['REQUEST_METHOD'] = $_POST){
     $name = $_POST['project_name'];
     $desc = $_POST['description'];
     $project = new Project();
-    $result =$project->create($name, $desc, $_SESSION['user_id']);
+    $result = $project->create($name, $desc, $_SESSION['user']);
 
     if($result){
         $message = "Project created successfully";
