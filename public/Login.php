@@ -11,9 +11,11 @@ if($_SERVER['REQUEST_METHOD'] = $_POST) {
     $logUser = $user->login($email, $password);
 
     if($logUser){
-        $_SESSION['user'] = $logUser;
+        $_SESSION['user'] = $logUser['full_name'];
+        $_SESSION['role'] = $logUser['role'];
+
         header('location: Dashboard.php');
-        exit;
+        exit();
     }
     else {
         $error = "wrong password or email!";
