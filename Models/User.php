@@ -11,12 +11,13 @@ class User {
 
         $hashed = password_hash($password, PASSWORD_DEFAULT);
 
-        $sql = "INSERT INTO user (full_name, email, password) VALUES (:full_name, :email, :password)";
+        $sql = "INSERT INTO user (full_name, email, password, role) VALUES (:full_name, :email, :password, :role)";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
             ':full_name' => $full_name,
             ':email' => $email,
-            ':password' => $hashed
+            ':password' => $hashed,
+            ':role'=> 'scrum'
         ]);
     }
     public function login($email, $password) {

@@ -155,4 +155,34 @@ class Task {
             ':id' => $task_id
         ]);
     }
+    public function isOwner($task_id, $user_id) {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM tasks WHERE id = :id AND assigned_to = :user_id");
+        $stmt->execute([':id' => $task_id, ':user_id' => $user_id]);
+        return (int)$stmt->fetchColumn() > 0;
+    }
+    public function update($id, $title, $description, $priority, $user_id, $role) {
+        if ($role === 'member' && !$this->isOwner($id, $user_id)) {
+            return false;
+        }
+        $stmt = $this->db->prepare("
+            UPDATE tasks
+            SET task_title = :title,
+                description = :description,
+                priority = :priority
+            WHERE id = :id
+        ");
+        return $stmt->execute([
+            ':title' => $title,
+            ':description' => $description,
+            ':priority' => $priority,
+            ':id' => $id
+        ]);
+    }
+    public function delete($id, $user_id, $role) {
+        if ($role === 'member' && !$this->isOwner($id, $user_id)) {
+            return false;
+        }
+        $stmt = $this->db->prepare("DELETE FROM tasks WHERE id = :id");
+        return $stmt->execute([':id' => $id]);
+    }
 }

@@ -179,8 +179,10 @@ function statusLabel($status) {
                     </ul>
                     <div class="task-actions">
                         <a class="link" href="task_comment.php?task_id=<?= $task['id'] ?>">Comments</a>
-                        <?php if ($role === 'member'): ?>
+                        <?php if ($role === 'member' && ($task['assigned_to'] ?? null) == $user_id): ?>
                             <a class="link" href="status_task.php?id=<?= $task['id'] ?>">Update Status</a>
+                            <a class="link" href="edit_task.php?id=<?= $task['id'] ?>">Edit</a>
+                            <a class="link" href="delete_task.php?id=<?= $task['id'] ?>" onclick="return confirm('Delete this task?')">Delete</a>
                         <?php endif; ?>
                     </div>
                 </article>
