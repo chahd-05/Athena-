@@ -103,7 +103,7 @@ function statusLabel($status) {
 <main class="container">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
         <h3 class="section-title" style="margin:0">Tasks</h3>
-        <?php if ($role === 'scrum' || $role === 'admin'): ?>
+        <?php if ($role === 'scrum' || $role === 'admin' || $role === 'member'): ?>
             <a href="create_task.php" class="btn">New Task</a>
         <?php endif; ?>
     </div>
